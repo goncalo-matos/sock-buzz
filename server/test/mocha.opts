@@ -1,0 +1,4 @@
+--require ts-node/register
+--ui mocha-typescript
+--require source-map-support/register
+./**/*.ts
