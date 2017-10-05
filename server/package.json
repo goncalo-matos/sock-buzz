@@ -9,10 +9,10 @@
     "build": "tsc",
     "prepublish": "npm run build"
   },
-  "author": "Goncalo Matos <goncalomatos3@gmail.com>",
+  "author": "Gonçalo Matos <goncalomatos3@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Atekon/sock-buzz.git"
+    "url": "git+https://github.com/Atekon/sock-buzz.git"
   },
   "bugs": {
     "url": "https://github.com/Atekon/sock-buzz/issues"
