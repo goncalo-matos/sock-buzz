@@ -3,6 +3,14 @@
     "extends": [
         "tslint:recommended"
     ],
+    "newline-before-return": true,
+    "no-shadowed-variable": [
+        true
+    ],
+    "prefer-const": true,
+    "one-variable-per-declaration": true,
+    "object-literal-shorthand": true,
+    "semicolon": [true, "always", "ignore-interfaces", "ignore-bound-class-methods"],
     "jsRules": {},
     "rules": {
         "quotemark": [true, "single"],
