@@ -1,9 +1,7 @@
-function hello() {
-    return 'hello world!';
-}
+import * as WebSocket from 'ws';
 
-hello();
+const wss = new WebSocket.Server({ port: 9191 });
 
-export {
-    hello,
-};
+wss.on('connection', (ws) => {
+    ws.send('hello world!');
+});
