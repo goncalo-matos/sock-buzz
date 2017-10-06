@@ -6,7 +6,8 @@
   "scripts": {
     "test": "cd test && mocha --opts ./mocha.opts",
     "test-watch": "npm run test -- --watch-extensions ts --watch",
-    "build": "tsc",
+    "build": "tsc --watch false",
+    "start": "concurrently --kill-others \"tsc -w\" \"nodemon -w ./build build/index.js\"",
     "prepublish": "npm run build"
   },
   "author": "Gonçalo Matos <goncalomatos3@gmail.com>",
@@ -22,8 +23,10 @@
     "@types/chai": "^4.0.4",
     "@types/ws": "^3.2.0",
     "chai": "^4.1.2",
+    "concurrently": "^3.5.0",
     "mocha": "^4.0.0",
     "mocha-typescript": "^1.1.9",
+    "nodemon": "^1.12.1",
     "source-map-support": "^0.5.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
