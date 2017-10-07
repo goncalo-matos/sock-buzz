@@ -4,8 +4,8 @@
   "description": "Sock buzz server",
   "main": "build/index.js",
   "scripts": {
-    "test": "cd test && mocha --opts ./mocha.opts",
-    "test-watch": "npm run test -- --watch-extensions ts --watch",
+    "test": "mocha",
+    "test-watch": "mocha --watch-extensions ts -w",
     "build": "tsc --watch false",
     "start": "concurrently --kill-others \"tsc -w\" \"nodemon -w ./build build/index.js\"",
     "prepublish": "npm run build"
@@ -27,6 +27,7 @@
     "mocha": "^4.0.0",
     "mocha-typescript": "^1.1.9",
     "nodemon": "^1.12.1",
+    "sinon": "^4.0.1",
     "source-map-support": "^0.5.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
