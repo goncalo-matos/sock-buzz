@@ -1,13 +1,13 @@
 import {IncomingMessage} from 'http';
 import * as WebSocket from 'ws';
 
-interface IPlayer {
+interface IPlayerSocket {
     name?: string;
     socket: WebSocket;
 }
 
 class PlayerSocketServer {
-    private _clientMap: Map<string, IPlayer>;
+    private _clientMap: Map<string, IPlayerSocket>;
     private _isActive: boolean;
     private _socketServer: WebSocket.Server;
 
