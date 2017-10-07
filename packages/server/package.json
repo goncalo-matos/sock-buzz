@@ -6,9 +6,9 @@
   "scripts": {
     "test": "mocha",
     "test-watch": "mocha --watch-extensions ts -w",
-    "build": "tsc --watch false",
+    "prepare": "tsc --watch false",
     "start": "concurrently --kill-others \"tsc -w\" \"nodemon -w ./build build/index.js\"",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run test"
   },
   "author": "Gonçalo Matos <goncalomatos3@gmail.com>",
   "repository": {

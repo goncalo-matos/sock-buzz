@@ -4,7 +4,7 @@
   "description": "client sock-buzz app",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
+    "prepare": "webpack --config webpack.config.js",
     "start": "webpack-dev-server --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
