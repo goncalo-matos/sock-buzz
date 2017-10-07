@@ -1,7 +1,6 @@
-import * as WebSocket from 'ws';
+import {PlayerSocketServer} from './PlayerSocketServer';
 
-const wss = new WebSocket.Server({ port: 9191 });
+const playerSocketServer = new PlayerSocketServer();
 
-wss.on('connection', (ws) => {
-    ws.send('hello world!');
-});
+playerSocketServer.startServer(9191);
+playerSocketServer.startQuestion();

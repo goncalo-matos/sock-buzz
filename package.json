@@ -4,7 +4,8 @@
   "description": "Sock-buzz",
   "main": "index.js",
   "devDependencies": {
-    "lerna": "^2.4.0"
+    "lerna": "^2.4.0",
+    "tslint-no-unused-expression-chai": "0.0.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -15,7 +15,11 @@
         "one-variable-per-declaration": true,
         "object-literal-shorthand": true,
         "variable-name": [true, "check-format", "allow-leading-underscore"],
-        "only-arrow-functions": false
+        "only-arrow-functions": false,
+        "space-before-function-paren": false,
+        "no-unused-expression-chai": true
     },
-    "rulesDirectory": []
+    "rulesDirectory": [
+        "tslint-no-unused-expression-chai"
+    ]
 }
