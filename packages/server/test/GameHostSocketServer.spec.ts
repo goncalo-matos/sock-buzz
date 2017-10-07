@@ -11,11 +11,15 @@ import { GameHostSocketServer } from '../src/GameHostSocketServer';
 describe('HostSocketServer', function () {
     let hostSocketServer: GameHostSocketServer;
     let stubSandbox: SinonSandbox;
+    let startStub: sinon.SinonStubStatic;
+    let stopStub: sinon.SinonStubStatic;
 
     beforeEach(function () {
         stubSandbox = sandbox.create();
 
-        hostSocketServer = new GameHostSocketServer();
+        startStub = stubSandbox.stub();
+        stopStub = stubSandbox.stub();
+        hostSocketServer = new GameHostSocketServer({start: startStub, stop: stopStub});
     });
 
     afterEach(function () {
@@ -57,6 +61,58 @@ describe('HostSocketServer', function () {
         it('should send the given order', function () {
             expect(clientStub.send).to.have.been
                 .calledWithExactly('[{"player":{"name":"name"},"time":"1990-01-01T00:00:00.000Z"}]');
+        });
+    });
+
+    describe('when the game host says to start', function () {
+        let clientStub: sinon.SinonStubbedInstance<WebSocket>;
+
+        beforeEach(function () {
+            const serverStub = createStubInstance(WebSocket.Server);
+
+            stubSandbox.stub(WebSocket, 'Server').returns(serverStub);
+            hostSocketServer.startServer(999);
+
+            // add the user
+            clientStub = createStubInstance<WebSocket>(WebSocket);
+
+            serverStub.on
+                .withArgs('connection', match.func)
+                .callArgWith(1, clientStub, { connection: { remoteAddress: '1' } });
+
+            clientStub.on
+                .withArgs('message')
+                .callArgWith(1, 'start');
+        });
+
+        it('should execute the start callback', function () {
+            expect(startStub).to.have.been.calledOnce;
+        });
+    });
+
+    describe('when the game host says to stop', function () {
+        let clientStub: sinon.SinonStubbedInstance<WebSocket>;
+
+        beforeEach(function () {
+            const serverStub = createStubInstance(WebSocket.Server);
+
+            stubSandbox.stub(WebSocket, 'Server').returns(serverStub);
+            hostSocketServer.startServer(999);
+
+            // add the user
+            clientStub = createStubInstance<WebSocket>(WebSocket);
+
+            serverStub.on
+                .withArgs('connection', match.func)
+                .callArgWith(1, clientStub, { connection: { remoteAddress: '1' } });
+
+            clientStub.on
+                .withArgs('message')
+                .callArgWith(1, 'stop');
+        });
+
+        it('should execute the start callback', function () {
+            expect(stopStub).to.have.been.calledOnce;
         });
     });
 });

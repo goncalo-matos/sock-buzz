@@ -3,13 +3,20 @@ import * as WebSocket from 'ws';
 import { IPlayer } from './IPlayer';
 
 interface IPlayerResult {
-    player: IPlayer,
-    time: Date
+    player: IPlayer;
+    time: Date;
+}
+
+interface ICallbacks {
+    start();
+    stop();
 }
 
 class GameHostSocketServer {
     private _socketServer: WebSocket.Server;
     private _clientSocket: WebSocket;
+
+    constructor(private _callbacks: ICallbacks) {}
 
     public startServer(port: number) {
         if (this._socketServer) {
@@ -29,7 +36,14 @@ class GameHostSocketServer {
         ws.on('message', (data) => this._onMessage(data));
     }
 
-    private _onMessage(data: WebSocket.Data) {}
+    private _onMessage(data: WebSocket.Data) {
+        switch (data) {
+            case 'start':
+            case 'stop':
+                this._callbacks[data]();
+                break;
+        }
+    }
 }
 
 export {
