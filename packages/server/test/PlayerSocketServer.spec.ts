@@ -49,8 +49,12 @@ describe('PlayerSocketServer', function () {
             client1Stub = createStubInstance<WebSocket>(WebSocket);
             client2Stub = createStubInstance<WebSocket>(WebSocket);
 
-            serverStub.on.callArgWith(1, client1Stub, { connection: { remoteAddress: '1' } });
-            serverStub.on.callArgWith(1, client2Stub, { connection: { remoteAddress: '2' } });
+            serverStub.on
+                .withArgs('connection', match.func)
+                .callArgWith(1, client1Stub, { connection: { remoteAddress: '1' } });
+            serverStub.on
+                .withArgs('connection', match.func)
+                .callArgWith(1, client2Stub, { connection: { remoteAddress: '2' } });
 
             playerSocketServer.startQuestion();
         });
