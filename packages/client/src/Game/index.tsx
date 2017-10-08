@@ -15,6 +15,10 @@ class Game extends React.Component {
         getWebSocket(PLAYER_WEBSOCKET_PATH).then((ws) => this._socketConnection = ws);
     }
 
+    public componentWillUnmount() {
+        this._socketConnection.close();
+    }
+
     public render() {
         return <button onClick={() => { this.buzz(); }}>BUZZ</button>;
     }

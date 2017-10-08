@@ -46,6 +46,10 @@ class Admin extends React.Component<any, IAdminState> {
         });
     }
 
+    public componentWillUnmount() {
+        this._socketConnection.close();
+    }
+
     public render() {
         const socketStatus = <span>{this.state.isSocketConnected ? 'true' : 'false'}</span>;
         const connectButton =
