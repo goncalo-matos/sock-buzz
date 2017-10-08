@@ -1,5 +1,3 @@
-// const websocketPath = 'ws://0.0.0.0:9191';
-
 function getWebSocket(websocketPath) {
     return new Promise<WebSocket>((resolve, reject) => {
         const ws = new WebSocket(websocketPath);
