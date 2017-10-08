@@ -6,12 +6,12 @@ import {
 } from 'react-router-dom';
 
 import { Admin } from './Admin';
-import { Home } from './Home';
+import { Game } from './Game';
 
 const app = () => (
     <Router>
         <div>
-            <Route exact path='/' component={Home} />
+            <Route exact path='/' component={Game} />
             <Route path='/admin' component={Admin} />
         </div>
     </Router>

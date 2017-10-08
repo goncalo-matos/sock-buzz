@@ -4,7 +4,7 @@ import { getWebSocket } from '../helpers/WebSocketPromise';
 
 const PLAYER_WEBSOCKET_PATH = 'ws://0.0.0.0:9191';
 
-class Home extends React.Component {
+class Game extends React.Component {
     private _socketConnection: WebSocket;
 
     public componentDidMount() {
@@ -21,5 +21,5 @@ class Home extends React.Component {
 }
 
 export {
-    Home,
+    Game,
 };
