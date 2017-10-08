@@ -7,28 +7,29 @@ module.exports = {
       filename: 'dist.js',
       path: path.resolve(__dirname, './dist')
     },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.jsx', '.js', '.json']
+    },
     module: {
         rules: [
             { test: /\.tsx?$/, loader: 'ts-loader' },
             {
                 test: /\.html?$/,
-                use: [
-                    { loader: 'file-loader' },
-                    { loader: 'extract-loader' },
-                    { loader: 'html-loader' }
-                ]
+                use: [{ loader: 'html-loader' }]
             }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Sock-Buzz'
+            title: 'Sock-Buzz',
+            template: path.resolve(__dirname, './src/index.html')
         })
     ],
     devtool: 'inline-source-map',
     devServer: {
         contentBase: path.resolve(__dirname, './dist'),
         port: 9192,
-        compress: true
+        compress: true,
+        historyApiFallback: true
     }
   }
