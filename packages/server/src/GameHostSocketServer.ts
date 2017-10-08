@@ -27,8 +27,8 @@ class GameHostSocketServer {
         this._socketServer.on('connection', (ws, req) => this._onConnect(ws));
     }
 
-    public sendPlayerPushOrder(players: IPlayerResult[]) {
-        this._clientSocket.send(JSON.stringify(players));
+    public sendPlayerPushOrder(player: IPlayerResult) {
+        this._clientSocket.send(JSON.stringify(player));
     }
 
     private _onConnect(ws: WebSocket) {

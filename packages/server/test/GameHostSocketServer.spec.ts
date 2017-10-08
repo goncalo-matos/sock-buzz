@@ -39,7 +39,7 @@ describe('HostSocketServer', function () {
         });
     });
 
-    describe('when sending the player push order', function () {
+    describe('when sending a player buzz', function () {
         let clientStub: sinon.SinonStubbedInstance<WebSocket>;
 
         beforeEach(function () {
@@ -55,12 +55,12 @@ describe('HostSocketServer', function () {
                 .withArgs('connection', match.func)
                 .callArgWith(1, clientStub, { connection: { remoteAddress: '1' } });
 
-            hostSocketServer.sendPlayerPushOrder([{ player: { name: 'name' }, time: new Date(1990, 0, 1) }]);
+            hostSocketServer.sendPlayerPushOrder({ player: { name: 'name' }, time: new Date(1990, 0, 1) });
         });
 
         it('should send the given order', function () {
             expect(clientStub.send).to.have.been
-                .calledWithExactly('[{"player":{"name":"name"},"time":"1990-01-01T00:00:00.000Z"}]');
+                .calledWithExactly('{"player":{"name":"name"},"time":"1990-01-01T00:00:00.000Z"}');
         });
     });
 
