@@ -1,9 +1,15 @@
-import {IncomingMessage} from 'http';
+import { IncomingMessage } from 'http';
 import * as WebSocket from 'ws';
+
+import { IPlayer } from 'src/IPlayer';
 
 interface IPlayerSocket {
     name?: string;
     socket: WebSocket;
+}
+
+interface ICallbacks {
+    onBuzz(player: IPlayer);
 }
 
 class PlayerSocketServer {
@@ -11,7 +17,7 @@ class PlayerSocketServer {
     private _isActive: boolean;
     private _socketServer: WebSocket.Server;
 
-    constructor() {
+    constructor(private _callbacks: ICallbacks) {
         this._clientMap = new Map();
         this._isActive = false;
     }
@@ -38,16 +44,19 @@ class PlayerSocketServer {
     private _onConnect(ws: WebSocket, req: IncomingMessage) {
         const ip = req.connection.remoteAddress; // if NGINX req.headers['x-forwarded-for'];
 
-        this._clientMap.set(ip, {socket: ws});
+        this._clientMap.set(ip, { socket: ws });
 
         ws.on('close', () => this._clientMap.delete(ip));
 
-        ws.on('message', (data) => this._onMessage(data));
+        ws.on('message', (data) => this._onMessage(data, ip));
     }
 
-    private _onMessage(data: WebSocket.Data) {
-        // TODO: use appropriate strategy later
-        console.log(data);
+    private _onMessage(data: WebSocket.Data, id: string) {
+        if (data === 'BUZZ') {
+            const client = this._clientMap.get(id);
+            // TODO: instead of id should be name, still need a message to name the clients
+            this._callbacks.onBuzz({ name: id });
+        }
     }
 
     private _broadcast(message: WebSocket.Data) {

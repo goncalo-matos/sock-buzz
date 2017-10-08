@@ -1,6 +1,6 @@
 import { expect, use } from 'chai';
 import { afterEach, beforeEach, describe, it } from 'mocha';
-import { createStubInstance, match, sandbox, SinonSandbox } from 'sinon';
+import { createStubInstance, match, sandbox, SinonSandbox, SinonStubStatic } from 'sinon';
 import * as sinonChai from 'sinon-chai';
 
 use(sinonChai);
@@ -11,11 +11,13 @@ import { PlayerSocketServer } from '../src/PlayerSocketServer';
 describe('PlayerSocketServer', function () {
     let playerSocketServer: PlayerSocketServer;
     let stubSandbox: SinonSandbox;
+    let onBuzzStub: SinonStubStatic;
 
     beforeEach(function () {
         stubSandbox = sandbox.create();
+        onBuzzStub = stubSandbox.stub();
 
-        playerSocketServer = new PlayerSocketServer();
+        playerSocketServer = new PlayerSocketServer({ onBuzz: onBuzzStub });
     });
 
     afterEach(function () {
@@ -31,7 +33,7 @@ describe('PlayerSocketServer', function () {
         });
 
         it('should start server in the given port', function () {
-            expect(WebSocket.Server).to.have.been.calledWith({port: 999});
+            expect(WebSocket.Server).to.have.been.calledWith({ port: 999 });
         });
     });
 
@@ -92,6 +94,31 @@ describe('PlayerSocketServer', function () {
         it('should broadcast STOP to all users', function () {
             expect(client1Stub.send).to.have.been.calledWith('STOP');
             expect(client2Stub.send).to.have.been.calledWith('STOP');
+        });
+    });
+
+    describe('when a player buzzes', function () {
+        let clientStub: sinon.SinonStubbedInstance<WebSocket>;
+
+        beforeEach(function () {
+            const serverStub = createStubInstance(WebSocket.Server);
+
+            stubSandbox.stub(WebSocket, 'Server').returns(serverStub);
+            playerSocketServer.startServer(999);
+
+            // add a user
+            clientStub = createStubInstance<WebSocket>(WebSocket);
+            serverStub.on
+                .withArgs('connection', match.func)
+                .callArgWith(1, clientStub, { connection: { remoteAddress: '1' } });
+
+            clientStub.on
+                .withArgs('message', match.func)
+                .callArgWith(1, 'BUZZ', { connection: { remoteAddress: '1' } });
+        });
+
+        it('should stop receiving broadcasts', function () {
+            expect(onBuzzStub).to.have.been.called.calledWithExactly({name: '1'});
         });
     });
 
