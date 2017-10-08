@@ -9,7 +9,7 @@ interface IAdminState {
 }
 
 class Admin extends React.Component<any, IAdminState> {
-    private socketConnection: WebSocket;
+    private _socketConnection: WebSocket;
 
     constructor(props) {
         super(props);
@@ -21,7 +21,7 @@ class Admin extends React.Component<any, IAdminState> {
 
     public connect() {
         getWebSocket(ADMIN_WEBSOCKET_PATH).then((ws) => {
-            this.socketConnection = ws;
+            this._socketConnection = ws;
             this.setState({
                 isSocketConnected: true,
             });
@@ -29,14 +29,14 @@ class Admin extends React.Component<any, IAdminState> {
     }
 
     public start() {
-        this.socketConnection.send('start');
+        this._socketConnection.send('start');
         this.setState({
             hasStarted: true,
         });
     }
 
     public stop() {
-        this.socketConnection.send('stop');
+        this._socketConnection.send('stop');
         this.setState({
             hasStarted: false,
         });
