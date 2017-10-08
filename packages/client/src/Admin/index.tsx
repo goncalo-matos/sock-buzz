@@ -9,12 +9,37 @@ interface IAdminState {
 }
 
 class Admin extends React.Component<any, IAdminState> {
+    private socketConnection: WebSocket;
+
     constructor(props) {
         super(props);
         this.state = {
             hasStarted: false,
             isSocketConnected: false,
         };
+    }
+
+    public connect() {
+        getWebSocket(ADMIN_WEBSOCKET_PATH).then((ws) => {
+            this.socketConnection = ws;
+            this.setState({
+                isSocketConnected: true,
+            });
+        });
+    }
+
+    public start() {
+        this.socketConnection.send('start');
+        this.setState({
+            hasStarted: true,
+        });
+    }
+
+    public stop() {
+        this.socketConnection.send('stop');
+        this.setState({
+            hasStarted: false,
+        });
     }
 
     public render() {
@@ -33,27 +58,6 @@ class Admin extends React.Component<any, IAdminState> {
             }
         </div>;
     }
-
-    public connect() {
-        getWebSocket(ADMIN_WEBSOCKET_PATH).then(() => {
-            this.setState({
-                isSocketConnected: true,
-            });
-        });
-    }
-
-    public start() {
-        this.setState({
-            hasStarted: true,
-        });
-    }
-
-    public stop() {
-        this.setState({
-            hasStarted: false,
-        });
-    }
-
 }
 
 export {
