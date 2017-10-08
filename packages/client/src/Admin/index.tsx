@@ -25,6 +25,10 @@ class Admin extends React.Component<any, IAdminState> {
             this.setState({
                 isSocketConnected: true,
             });
+
+            ws.addEventListener('message', (message) => {
+                console.log('gnm', message.data);
+            });
         });
     }
 

@@ -1,8 +1,22 @@
 import * as React from 'react';
 
+import { getWebSocket } from '../helpers/WebSocketPromise';
+
+const PLAYER_WEBSOCKET_PATH = 'ws://0.0.0.0:9191';
+
 class Home extends React.Component {
+    private _socketConnection: WebSocket;
+
+    public componentDidMount() {
+        getWebSocket(PLAYER_WEBSOCKET_PATH).then((ws) => this._socketConnection = ws);
+    }
+
+    public buzz() {
+        this._socketConnection.send('BUZZ');
+    }
+
     public render() {
-        return <span>Home</span>;
+        return <button onClick={() => { this.buzz(); }}>BUZZ</button>;
     }
 }
 

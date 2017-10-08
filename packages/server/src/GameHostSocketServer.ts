@@ -27,7 +27,7 @@ class GameHostSocketServer {
         this._socketServer.on('connection', (ws, req) => this._onConnect(ws));
     }
 
-    public sendPlayerPushOrder(player: IPlayerResult) {
+    public sendPlayerBuzz(player: IPlayerResult) {
         this._clientSocket.send(JSON.stringify(player));
     }
 

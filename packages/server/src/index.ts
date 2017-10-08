@@ -3,7 +3,7 @@ import {PlayerSocketServer} from './PlayerSocketServer';
 
 const playerSocketServer = new PlayerSocketServer({
     onBuzz: (player) => {
-        gameHostSocketServer.sendPlayerPushOrder({player, time: new Date()});
+        gameHostSocketServer.sendPlayerBuzz({player, time: new Date()});
     },
 });
 const gameHostSocketServer = new GameHostSocketServer({
