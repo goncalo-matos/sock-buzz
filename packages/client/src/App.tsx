@@ -9,13 +9,16 @@ import {
 import { Admin } from './Admin';
 import { Game } from './Game';
 
-const app = () => (
-    <Router>
-        <Switch>
-            <Route exact path='/' component={Game} />
-            <Route path='/admin' component={Admin} />
-        </Switch>
-    </Router>
-);
+class App extends React.Component {
 
-export default app;
+    public render() {
+        return <Router>
+            <Switch>
+                <Route exact path='/' component={Game} />
+                <Route path='/admin' component={Admin} />
+            </Switch>
+        </Router>;
+    }
+}
+
+export default App;
