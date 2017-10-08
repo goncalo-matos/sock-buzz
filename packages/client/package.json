@@ -4,7 +4,7 @@
   "description": "client sock-buzz app",
   "main": "index.js",
   "scripts": {
-    "prepare": "webpack --config webpack.config.js",
+    "prepare": "rm -rf ./dist && webpack --config webpack.config.js",
     "start": "webpack-dev-server --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,7 +25,10 @@
   "devDependencies": {
     "@types/react": "^16.0.9",
     "@types/react-dom": "^16.0.0",
+    "@types/react-router-dom": "^4.0.8",
     "@types/ws": "^3.2.0",
+    "file-loader": "^1.1.5",
+    "html-loader": "^0.5.1",
     "html-webpack-plugin": "^2.30.1",
     "ts-loader": "^2.3.7",
     "typescript": "^2.5.3",
@@ -34,6 +37,7 @@
   },
   "dependencies": {
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2"
   }
 }
