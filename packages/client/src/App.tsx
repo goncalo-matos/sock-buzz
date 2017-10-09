@@ -41,7 +41,7 @@ class App extends React.Component<any, IAppState> {
                 return <Admin />;
             }
 
-            return <Game />;
+            return <Game username={this.state.username}/>;
         } else {
             return <Login onLogin={(username) => this.login(username)}/>;
         }
