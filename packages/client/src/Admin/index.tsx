@@ -33,7 +33,6 @@ class Admin extends React.Component<any, IAdminState> {
                 isSocketConnected: true,
             });
 
-            ws.binaryType = 'arraybuffer';
             ws.addEventListener('message', (message) => {
                 const parsedData = bson.deserialize(Buffer.from(message.data));
 

@@ -1,4 +1,5 @@
-function getWebSocket(websocketPath) {
+function getWebSocket(websocketPath, { binaryType = 'arraybuffer' } = {}) {
+
     return new Promise<WebSocket>((resolve, reject) => {
         const ws = new WebSocket(websocketPath);
         const onOpen = () => resolve(ws);
@@ -8,6 +9,7 @@ function getWebSocket(websocketPath) {
             return reject(ws);
         };
 
+        ws.binaryType = binaryType;
         ws.addEventListener('open', onOpen);
         ws.addEventListener('close', onError);
     });
