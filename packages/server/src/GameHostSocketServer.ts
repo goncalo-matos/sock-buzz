@@ -32,7 +32,7 @@ class GameHostSocketServer {
     }
 
     public sendPlayerBuzz(player: IPlayerResult) {
-        this._clientSocket.send(JSON.stringify(player));
+        this._clientSocket.send(bson.serialize({type: 'BUZZ', player}));
     }
 
     private _onConnect(ws: WebSocket) {

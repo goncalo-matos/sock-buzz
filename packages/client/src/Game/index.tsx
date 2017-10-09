@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import { getWebSocket } from '../helpers/WebSocketPromise';
 
-const PLAYER_WEBSOCKET_PATH = 'ws://0.0.0.0:9191';
+const PLAYER_WEBSOCKET_PATH = `ws://${location.hostname}:9191`;
 
 const bson = new BSON();
 

@@ -2,14 +2,16 @@ import { BSON } from 'bson';
 import * as React from 'react';
 
 import { getWebSocket } from '../helpers/WebSocketPromise';
+import { IPlayerResult, PlayerResultList } from './PlayerResultList';
 
-const ADMIN_WEBSOCKET_PATH = 'ws://0.0.0.0:9292';
+const ADMIN_WEBSOCKET_PATH = `ws://${location.hostname}:9292`;
 
 const bson = new BSON();
 
 interface IAdminState {
     hasStarted: boolean;
     isSocketConnected: boolean;
+    playerResultList: IPlayerResult[];
 }
 
 class Admin extends React.Component<any, IAdminState> {
@@ -20,6 +22,7 @@ class Admin extends React.Component<any, IAdminState> {
         this.state = {
             hasStarted: false,
             isSocketConnected: false,
+            playerResultList: [],
         };
     }
 
@@ -30,8 +33,15 @@ class Admin extends React.Component<any, IAdminState> {
                 isSocketConnected: true,
             });
 
+            ws.binaryType = 'arraybuffer';
             ws.addEventListener('message', (message) => {
-                console.log('gnm', message.data);
+                const parsedData = bson.deserialize(Buffer.from(message.data));
+
+                if (parsedData.type === 'BUZZ') {
+                    this.setState((prevState: IAdminState) => ({
+                        playerResultList: [...prevState.playerResultList, parsedData.player],
+                    }));
+                }
             });
         });
     }
@@ -59,15 +69,22 @@ class Admin extends React.Component<any, IAdminState> {
         const connectButton =
             <button onClick={(e) => { this.connect(); }} disabled={this.state.isSocketConnected}>CONNECT</button>;
 
+        let gameStateButtons;
+        let playerResultList;
+
+        if (this.state.isSocketConnected) {
+            gameStateButtons = <span>
+                <button onClick={(e) => { this.start(); }} disabled={this.state.hasStarted}>START</button>
+                <button onClick={(e) => { this.stop(); }} disabled={!this.state.hasStarted}>STOP</button>
+            </span>;
+            playerResultList = <PlayerResultList players={this.state.playerResultList}/>;
+        }
+
         return <div>
             <span>{this.state.isSocketConnected ? 'true' : 'false'}</span>
             <button onClick={(e) => { this.connect(); }} disabled={this.state.isSocketConnected}>CONNECT</button>
-            {this.state.isSocketConnected &&
-                <span>
-                    <button onClick={(e) => { this.start(); }} disabled={this.state.hasStarted}>START</button>
-                    <button onClick={(e) => { this.stop(); }} disabled={!this.state.hasStarted}>STOP</button>
-                </span>
-            }
+            {gameStateButtons}
+            {playerResultList}
         </div>;
     }
 }

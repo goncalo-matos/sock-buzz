@@ -56,11 +56,15 @@ class PlayerSocketServer {
 
     private _onMessage(data: Buffer, id: string) {
         const parsedData = bson.deserialize(data);
+        const client = this._clientMap.get(id);
 
-        if (parsedData.type === 'BUZZ') {
-            const client = this._clientMap.get(id);
-            // TODO: instead of id should be name, still need a message to name the clients
-            this._callbacks.onBuzz({ name: id });
+        switch (parsedData.type) {
+            case 'BUZZ':
+                this._callbacks.onBuzz({ name: client.name });
+                break;
+            case 'NAME':
+                client.name = parsedData.name;
+                break;
         }
     }
 
