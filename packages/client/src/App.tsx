@@ -1,11 +1,4 @@
 import * as React from 'react';
-import {
-    BrowserRouter as Router,
-    Link,
-    Route,
-    Switch,
-    Redirect
-} from 'react-router-dom';
 
 import { Admin } from './Admin';
 import { Game } from './Game';
