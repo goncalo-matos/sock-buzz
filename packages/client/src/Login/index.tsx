@@ -9,6 +9,14 @@ interface ILoginState {
 }
 
 class Login extends React.Component<ILoginProps, ILoginState> {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            username: '',
+        };
+    }
+
     public updateUsername(e: React.ChangeEvent<HTMLInputElement>) {
         this.setState({
             username: e.target.value,
