@@ -46,7 +46,7 @@ class Game extends React.Component<IGameProps, IGameState> {
         this._socketConnection.send(bson.serialize({ name: this.props.username, type: 'NAME' }));
     }
 
-    public componentDidMount() {
+    public connect() {
         return getWebSocket(PLAYER_WEBSOCKET_PATH)
             .then((ws) => {
                 this._socketConnection = ws;
@@ -54,6 +54,10 @@ class Game extends React.Component<IGameProps, IGameState> {
 
                 ws.addEventListener('message', (message) => this._onMessage(message));
             });
+    }
+
+    public componentDidMount() {
+        return this.connect();
     }
 
     public componentWillUnmount() {
