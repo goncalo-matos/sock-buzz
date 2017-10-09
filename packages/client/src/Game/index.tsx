@@ -42,11 +42,15 @@ class Game extends React.Component<IGameProps, IGameState> {
         this._socketConnection.send(bson.serialize({ type: 'BUZZ' }));
     }
 
+    public sendName() {
+        this._socketConnection.send(bson.serialize({ name: this.props.username, type: 'NAME' }));
+    }
+
     public componentDidMount() {
         return getWebSocket(PLAYER_WEBSOCKET_PATH)
             .then((ws) => {
                 this._socketConnection = ws;
-                ws.send(bson.serialize({ name: this.props.username, type: 'NAME' }));
+                this.sendName();
 
                 ws.addEventListener('message', (message) => this._onMessage(message));
             });

@@ -5,14 +5,14 @@ import * as sinonChai from 'sinon-chai';
 
 use(sinonChai);
 
-import {BSON} from 'bson';
+import { BSON } from 'bson';
 import * as WebSocket from 'ws';
 import { GameHostSocketServer } from '../src/GameHostSocketServer';
 
 // HACK: this aint cool. should be mocking
 const bson = new BSON();
 
-describe('HostSocketServer', function () {
+describe('GameHostSocketServer', function () {
     let hostSocketServer: GameHostSocketServer;
     let stubSandbox: SinonSandbox;
     let startStub: sinon.SinonStubStatic;
@@ -23,7 +23,7 @@ describe('HostSocketServer', function () {
 
         startStub = stubSandbox.stub();
         stopStub = stubSandbox.stub();
-        hostSocketServer = new GameHostSocketServer({start: startStub, stop: stopStub});
+        hostSocketServer = new GameHostSocketServer({ start: startStub, stop: stopStub });
     });
 
     afterEach(function () {
@@ -64,7 +64,7 @@ describe('HostSocketServer', function () {
 
         it('should send the given order', function () {
             expect(clientStub.send).to.have.been
-                .calledWithExactly('{"player":{"name":"name"},"time":"1990-01-01T00:00:00.000Z"}');
+                .calledWithExactly(bson.serialize({ player: { name: 'name' }, time: new Date(1990, 0, 1) }));
         });
     });
 
@@ -86,7 +86,7 @@ describe('HostSocketServer', function () {
 
             clientStub.on
                 .withArgs('message')
-                .callArgWith(1, bson.serialize({type: 'start'}));
+                .callArgWith(1, bson.serialize({ type: 'start' }));
         });
 
         it('should execute the start callback', function () {
@@ -112,7 +112,7 @@ describe('HostSocketServer', function () {
 
             clientStub.on
                 .withArgs('message')
-                .callArgWith(1, bson.serialize({type: 'stop'}));
+                .callArgWith(1, bson.serialize({ type: 'stop' }));
         });
 
         it('should execute the start callback', function () {
