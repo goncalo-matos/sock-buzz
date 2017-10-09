@@ -27,7 +27,7 @@ class Admin extends React.Component<any, IAdminState> {
     }
 
     public connect() {
-        getWebSocket(ADMIN_WEBSOCKET_PATH).then((ws) => {
+        return getWebSocket(ADMIN_WEBSOCKET_PATH).then((ws) => {
             this._socketConnection = ws;
             this.setState({
                 isSocketConnected: true,
@@ -49,6 +49,7 @@ class Admin extends React.Component<any, IAdminState> {
         this._socketConnection.send(bson.serialize({ type: 'start' }));
         this.setState({
             hasStarted: true,
+            playerResultList: [],
         });
     }
 
@@ -59,15 +60,15 @@ class Admin extends React.Component<any, IAdminState> {
         });
     }
 
+    public componentDidMount() {
+        return this.connect();
+    }
+
     public componentWillUnmount() {
         this._socketConnection.close();
     }
 
     public render() {
-        const socketStatus = <span>{this.state.isSocketConnected ? 'true' : 'false'}</span>;
-        const connectButton =
-            <button onClick={(e) => { this.connect(); }} disabled={this.state.isSocketConnected}>CONNECT</button>;
-
         let gameStateButtons;
         let playerResultList;
 
@@ -76,12 +77,10 @@ class Admin extends React.Component<any, IAdminState> {
                 <button onClick={(e) => { this.start(); }} disabled={this.state.hasStarted}>START</button>
                 <button onClick={(e) => { this.stop(); }} disabled={!this.state.hasStarted}>STOP</button>
             </span>;
-            playerResultList = <PlayerResultList players={this.state.playerResultList}/>;
+            playerResultList = <PlayerResultList players={this.state.playerResultList} />;
         }
 
         return <div>
-            <span>{this.state.isSocketConnected ? 'true' : 'false'}</span>
-            <button onClick={(e) => { this.connect(); }} disabled={this.state.isSocketConnected}>CONNECT</button>
             {gameStateButtons}
             {playerResultList}
         </div>;
