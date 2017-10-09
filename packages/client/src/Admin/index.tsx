@@ -1,7 +1,11 @@
+import { BSON } from 'bson';
 import * as React from 'react';
+
 import { getWebSocket } from '../helpers/WebSocketPromise';
 
 const ADMIN_WEBSOCKET_PATH = 'ws://0.0.0.0:9292';
+
+const bson = new BSON();
 
 interface IAdminState {
     hasStarted: boolean;
@@ -33,14 +37,14 @@ class Admin extends React.Component<any, IAdminState> {
     }
 
     public start() {
-        this._socketConnection.send('start');
+        this._socketConnection.send(bson.serialize({ type: 'start' }));
         this.setState({
             hasStarted: true,
         });
     }
 
     public stop() {
-        this._socketConnection.send('stop');
+        this._socketConnection.send(bson.serialize({ type: 'stop' }));
         this.setState({
             hasStarted: false,
         });

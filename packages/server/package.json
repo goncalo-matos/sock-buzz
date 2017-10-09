@@ -20,6 +20,7 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "@types/bson": "^1.0.4",
     "@types/chai": "^4.0.4",
     "@types/sinon-chai": "^2.7.29",
     "@types/ws": "^3.2.0",
@@ -36,6 +37,7 @@
     "typescript": "^2.5.3"
   },
   "dependencies": {
+    "bson": "^1.0.4",
     "ws": "^3.2.0"
   }
 }

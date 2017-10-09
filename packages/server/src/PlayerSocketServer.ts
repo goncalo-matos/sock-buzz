@@ -1,7 +1,10 @@
+import { BSON } from 'bson';
 import { IncomingMessage } from 'http';
 import * as WebSocket from 'ws';
 
 import { IPlayer } from 'src/IPlayer';
+
+const bson = new BSON();
 
 interface IPlayerSocket {
     name?: string;
@@ -48,11 +51,13 @@ class PlayerSocketServer {
 
         ws.on('close', () => this._clientMap.delete(ip));
 
-        ws.on('message', (data) => this._onMessage(data, ip));
+        ws.on('message', (data: Buffer) => this._onMessage(data, ip));
     }
 
-    private _onMessage(data: WebSocket.Data, id: string) {
-        if (data === 'BUZZ') {
+    private _onMessage(data: Buffer, id: string) {
+        const parsedData = bson.deserialize(data);
+
+        if (parsedData.type === 'BUZZ') {
             const client = this._clientMap.get(id);
             // TODO: instead of id should be name, still need a message to name the clients
             this._callbacks.onBuzz({ name: id });
