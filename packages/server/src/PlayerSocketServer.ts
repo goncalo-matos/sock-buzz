@@ -35,12 +35,12 @@ class PlayerSocketServer {
     }
 
     public startQuestion() {
-        this._broadcast('START');
+        this._broadcast({type: 'start'});
         this._isActive = true;
     }
 
     public stopQuestion() {
-        this._broadcast('STOP');
+        this._broadcast({type: 'stop'});
         this._isActive = false;
     }
 
@@ -68,9 +68,9 @@ class PlayerSocketServer {
         }
     }
 
-    private _broadcast(message: WebSocket.Data) {
+    private _broadcast(message) {
         for (const client of this._clientMap.values()) {
-            client.socket.send(message);
+            client.socket.send(bson.serialize(message));
         }
     }
 }
