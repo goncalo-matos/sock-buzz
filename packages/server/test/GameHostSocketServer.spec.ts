@@ -55,7 +55,7 @@ describe('HostSocketServer', function () {
                 .withArgs('connection', match.func)
                 .callArgWith(1, clientStub, { connection: { remoteAddress: '1' } });
 
-            hostSocketServer.sendPlayerPushOrder({ player: { name: 'name' }, time: new Date(1990, 0, 1) });
+            hostSocketServer.sendPlayerBuzz({ player: { name: 'name' }, time: new Date(1990, 0, 1) });
         });
 
         it('should send the given order', function () {
