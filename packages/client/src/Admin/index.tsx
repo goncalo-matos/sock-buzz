@@ -2,7 +2,7 @@ import { BSON } from 'bson';
 import * as React from 'react';
 
 import { getWebSocket } from '../helpers/WebSocketPromise';
-import { IPlayerResult, PlayerResultList } from './PlayerResultList';
+import { IPlayerResult, IPlayerResultListProps, PlayerResultList } from './PlayerResultList';
 
 const ADMIN_WEBSOCKET_PATH = `ws://${location.hostname}:9292`;
 
@@ -11,7 +11,7 @@ const bson = new BSON();
 interface IAdminState {
     hasStarted: boolean;
     isSocketConnected: boolean;
-    playerResultList: IPlayerResult[];
+    playerResultList: IPlayerResultListProps['players'];
 }
 
 class Admin extends React.Component<any, IAdminState> {
@@ -22,7 +22,7 @@ class Admin extends React.Component<any, IAdminState> {
         this.state = {
             hasStarted: false,
             isSocketConnected: false,
-            playerResultList: [],
+            playerResultList: new Map(),
         };
     }
 
@@ -43,9 +43,10 @@ class Admin extends React.Component<any, IAdminState> {
         });
     }
 
-    public getBuzz(playerResult) {
+    public getBuzz(playerResult: IPlayerResult) {
         this.setState((prevState: IAdminState) => ({
-            playerResultList: [...prevState.playerResultList, playerResult],
+            playerResultList: prevState.playerResultList.has(playerResult.player.name) ? prevState.playerResultList :
+                prevState.playerResultList.set(playerResult.player.name, playerResult),
         }));
     }
 
@@ -53,7 +54,7 @@ class Admin extends React.Component<any, IAdminState> {
         this._socketConnection.send(bson.serialize({ type: 'start' }));
         this.setState({
             hasStarted: true,
-            playerResultList: [],
+            playerResultList: new Map(),
         });
     }
 

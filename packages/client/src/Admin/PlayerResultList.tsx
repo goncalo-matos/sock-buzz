@@ -10,15 +10,15 @@ interface IPlayerResult {
 }
 
 interface IPlayerResultListProps {
-    players: IPlayerResult[];
+    players: Map<IPlayer['name'], IPlayerResult>;
 }
 
 class PlayerResultList extends React.Component<IPlayerResultListProps, any> {
 
     public render() {
-        const listItems = this.props.players
-            .sort((playerResultA, playerResultB) => playerResultB.time.getTime() - playerResultA.time.getTime())
-            .map((playerResult) => <li key={playerResult.player.name}>
+        const listItems = Array.from(this.props.players)
+            .sort(([, playerResultA], [, playerResultB]) => playerResultB.time.getTime() - playerResultA.time.getTime())
+            .map(([key, playerResult]) => <li key={key}>
                 {playerResult.player.name}{playerResult.time.toDateString()}
             </li>);
 
@@ -30,5 +30,6 @@ class PlayerResultList extends React.Component<IPlayerResultListProps, any> {
 
 export {
     PlayerResultList,
+    IPlayerResultListProps,
     IPlayerResult,
 };
