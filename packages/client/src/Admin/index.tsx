@@ -37,12 +37,16 @@ class Admin extends React.Component<any, IAdminState> {
                 const parsedData = bson.deserialize(Buffer.from(message.data));
 
                 if (parsedData.type === 'BUZZ') {
-                    this.setState((prevState: IAdminState) => ({
-                        playerResultList: [...prevState.playerResultList, parsedData.player],
-                    }));
+                    this.getBuzz(parsedData.playerResult);
                 }
             });
         });
+    }
+
+    public getBuzz(playerResult) {
+        this.setState((prevState: IAdminState) => ({
+            playerResultList: [...prevState.playerResultList, playerResult],
+        }));
     }
 
     public start() {

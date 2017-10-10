@@ -31,8 +31,8 @@ class GameHostSocketServer {
         this._socketServer.on('connection', (ws, req) => this._onConnect(ws));
     }
 
-    public sendPlayerBuzz(player: IPlayerResult) {
-        this._clientSocket.send(bson.serialize({type: 'BUZZ', player}));
+    public sendPlayerBuzz(playerResult: IPlayerResult) {
+        this._clientSocket.send(bson.serialize({type: 'BUZZ', playerResult}));
     }
 
     private _onConnect(ws: WebSocket) {
