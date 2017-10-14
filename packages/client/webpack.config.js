@@ -1,5 +1,6 @@
 const path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     entry: path.resolve(__dirname, './src/index.tsx'),
@@ -11,25 +12,37 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.jsx', '.js', '.json']
     },
     module: {
-        rules: [
-            { test: /\.tsx?$/, loader: 'ts-loader' },
-            {
-                test: /\.html?$/,
-                use: [{ loader: 'html-loader' }]
-            }
+        rules: [{
+            test: /\.tsx?$/,
+            use: [
+                { loader: 'react-hot-loader/webpack' },
+                { loader: 'ts-loader' }
+            ]
+        }, {
+            test: /\.html?$/,
+            use: [{ loader: 'html-loader' }]
+        }, {
+            test: /\.css$/,
+            use: [
+                { loader: 'style-loader' },
+                { loader: 'css-loader', options: { modules: true, namedExport: true } }
+            ]
+        },
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Sock-Buzz',
             template: path.resolve(__dirname, './src/index.html')
-        })
+        }),
+        new webpack.HotModuleReplacementPlugin()
     ],
     devtool: 'inline-source-map',
     devServer: {
         contentBase: path.resolve(__dirname, './dist'),
         port: 9192,
         compress: true,
-        historyApiFallback: true
+        historyApiFallback: true,
+        hot: true
     }
   }
