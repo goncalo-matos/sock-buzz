@@ -2,7 +2,8 @@ import * as React from 'react';
 
 import { Admin } from './Admin';
 import { Game } from './Game';
-import { Login } from './Login';
+
+import { Login } from './components/Login';
 
 interface IAppState {
     hasLoggedIn: boolean;
