@@ -67,7 +67,14 @@ class Game extends React.Component<IGameProps, IGameState> {
     }
 
     public render() {
-        return <div style={{width: '100px', height: '100px'}}>
+        const style: React.CSSProperties = {
+            alignItems: 'center',
+            display: 'flex',
+            height: '100%',
+            justifyContent: 'center',
+        };
+
+        return <div style={style}>
             <Buzzer
                 active={ this.state.isBuzzActive }
                 onBuzz={ () => { this.sendBuzz(); } }
