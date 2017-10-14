@@ -1,0 +1,25 @@
+.btn {
+    border: none;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+
+    background: #cb4e4e;
+    color: #fff;
+    box-shadow: 0 6px #ab3c3c;
+
+    transition: all 100ms ease;
+    top: 0;
+
+    &:active {
+        box-shadow: 0 0 #ab3c3c;
+        top: 6px;
+    }
+}

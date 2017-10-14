@@ -1,6 +1,8 @@
 import { BSON } from 'bson';
 import * as React from 'react';
 
+import {Buzzer} from '../components/Buzzer';
+
 import { getWebSocket } from '../helpers/WebSocketPromise';
 
 const PLAYER_WEBSOCKET_PATH = `ws://${location.hostname}:9191`;
@@ -38,7 +40,7 @@ class Game extends React.Component<IGameProps, IGameState> {
         });
     }
 
-    public buzz() {
+    public sendBuzz() {
         this._socketConnection.send(bson.serialize({ type: 'BUZZ' }));
     }
 
@@ -65,7 +67,13 @@ class Game extends React.Component<IGameProps, IGameState> {
     }
 
     public render() {
-        return <button disabled={!this.state.isBuzzActive} onClick={() => { this.buzz(); }}>BUZZ</button>;
+        return <div style={{width: '100px', height: '100px'}}>
+            <Buzzer
+                active={ this.state.isBuzzActive }
+                onBuzz={ () => { this.sendBuzz(); } }
+            />
+        </div>;
+
     }
 
     private _onMessage(message: MessageEvent) {

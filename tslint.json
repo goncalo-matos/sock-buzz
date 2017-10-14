@@ -17,7 +17,8 @@
         "variable-name": [true, "check-format", "allow-leading-underscore"],
         "only-arrow-functions": false,
         "space-before-function-paren": false,
-        "no-unused-expression-chai": true
+        "no-unused-expression-chai": true,
+        "no-var-requires": false
     },
     "rulesDirectory": [
         "tslint-no-unused-expression-chai"
