@@ -3,7 +3,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-    entry: path.resolve(__dirname, './src/index.tsx'),
+    entry: [
+        'react-hot-loader/patch',
+        path.resolve(__dirname, './src/index.tsx')
+    ],
     output: {
       filename: 'dist.js',
       path: path.resolve(__dirname, './dist')
@@ -22,10 +25,11 @@ module.exports = {
             test: /\.html?$/,
             use: [{ loader: 'html-loader' }]
         }, {
-            test: /\.css$/,
+            test: /\.scss$/,
             use: [
                 { loader: 'style-loader' },
-                { loader: 'css-loader', options: { modules: true, namedExport: true } }
+                { loader: 'css-loader', options: { modules: true, namedExport: true } },
+                { loader: 'sass-loader' }
             ]
         },
         ]
