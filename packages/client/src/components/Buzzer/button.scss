@@ -1,5 +1,10 @@
 $btn-height: 12px;
 $btn-color: #cb4e4e;
+$btn-disabled-color: lighten($color: $btn-color, $amount: 15%);
+
+@function shadow-color($color) {
+    @return darken($color: $color, $amount: 8%);
+}
 
 .btn {
     border: none;
@@ -17,7 +22,7 @@ $btn-color: #cb4e4e;
 
     background: $btn-color;
     color: #fff;
-    box-shadow: 0 $btn-height darken($color: $btn-color, $amount: 8%);
+    box-shadow: 0 $btn-height shadow-color($color: $btn-color);
 
     transition: all 100ms ease;
     top: 0;
@@ -25,5 +30,10 @@ $btn-color: #cb4e4e;
     &:active {
         box-shadow: 0 0 #ab3c3c;
         top: $btn-height;
+    }
+
+    &:disabled {
+        background: $btn-disabled-color;
+        box-shadow: 0 $btn-height shadow-color($color: $btn-disabled-color);
     }
 }
