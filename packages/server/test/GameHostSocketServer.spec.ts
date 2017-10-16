@@ -5,12 +5,9 @@ import * as sinonChai from 'sinon-chai';
 
 use(sinonChai);
 
-import { BSON } from 'bson';
 import * as WebSocket from 'ws';
 import { GameHostSocketServer } from '../src/GameHostSocketServer';
 
-// HACK: this aint cool. should be mocking
-const bson = new BSON();
 
 describe('GameHostSocketServer', function () {
     let hostSocketServer: GameHostSocketServer;
@@ -64,7 +61,7 @@ describe('GameHostSocketServer', function () {
 
         it('should send the given order', function () {
             expect(clientStub.send).to.have.been
-                .calledWithExactly(bson.serialize({ player: { name: 'name' }, time: new Date(1990, 0, 1) }));
+                .calledWithExactly(JSON.stringify({ player: { name: 'name' }, time: new Date(1990, 0, 1) }));
         });
     });
 
@@ -86,7 +83,7 @@ describe('GameHostSocketServer', function () {
 
             clientStub.on
                 .withArgs('message')
-                .callArgWith(1, bson.serialize({ type: 'start' }));
+                .callArgWith(1, JSON.stringify({ type: 'start' }));
         });
 
         it('should execute the start callback', function () {
@@ -112,7 +109,7 @@ describe('GameHostSocketServer', function () {
 
             clientStub.on
                 .withArgs('message')
-                .callArgWith(1, bson.serialize({ type: 'stop' }));
+                .callArgWith(1, JSON.stringify({ type: 'stop' }));
         });
 
         it('should execute the start callback', function () {

@@ -1,10 +1,7 @@
-import { BSON } from 'bson';
 import { IncomingMessage } from 'http';
 import * as WebSocket from 'ws';
 
 import { IPlayer } from './IPlayer';
-
-const bson = new BSON();
 
 interface IPlayerResult {
     player: IPlayer;
@@ -32,16 +29,16 @@ class GameHostSocketServer {
     }
 
     public sendPlayerBuzz(playerResult: IPlayerResult) {
-        this._clientSocket.send(bson.serialize({type: 'BUZZ', playerResult}));
+        this._clientSocket.send(JSON.stringify({type: 'BUZZ', playerResult}));
     }
 
     private _onConnect(ws: WebSocket) {
         this._clientSocket = ws;
-        ws.on('message', (data: Buffer) => this._onMessage(data));
+        ws.on('message', (data) => this._onMessage(data));
     }
 
-    private _onMessage(data: Buffer) {
-        const parsedData = bson.deserialize(data);
+    private _onMessage(data) {
+        const parsedData = JSON.parse(data);
 
         switch (parsedData.type) {
             case 'start':

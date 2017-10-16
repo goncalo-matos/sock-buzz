@@ -1,13 +1,10 @@
-import { BSON } from 'bson';
 import * as React from 'react';
 
-import {Buzzer} from '../components/Buzzer';
+import { Buzzer } from '../components/Buzzer';
 
 import { getWebSocket } from '../helpers/WebSocketPromise';
 
 const PLAYER_WEBSOCKET_PATH = `ws://${location.hostname}:9191`;
-
-const bson = new BSON();
 
 interface IGameProps {
     username: string;
@@ -41,11 +38,11 @@ class Game extends React.Component<IGameProps, IGameState> {
     }
 
     public sendBuzz() {
-        this._socketConnection.send(bson.serialize({ type: 'BUZZ' }));
+        this._socketConnection.send(JSON.stringify({ type: 'BUZZ' }));
     }
 
     public sendName() {
-        this._socketConnection.send(bson.serialize({ name: this.props.username, type: 'NAME' }));
+        this._socketConnection.send(JSON.stringify({ name: this.props.username, type: 'NAME' }));
     }
 
     public connect() {
@@ -84,7 +81,7 @@ class Game extends React.Component<IGameProps, IGameState> {
     }
 
     private _onMessage(message: MessageEvent) {
-        const parsedData = bson.deserialize(Buffer.from(message.data));
+        const parsedData = JSON.parse(message.data);
 
         switch (parsedData.type) {
             case 'start':

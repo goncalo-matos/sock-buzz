@@ -1,12 +1,9 @@
-import { BSON } from 'bson';
 import * as React from 'react';
 
 import { getWebSocket } from '../helpers/WebSocketPromise';
 import { IPlayerResult, IPlayerResultListProps, PlayerResultList } from './PlayerResultList';
 
 const ADMIN_WEBSOCKET_PATH = `ws://${location.hostname}:9292`;
-
-const bson = new BSON();
 
 interface IAdminState {
     hasStarted: boolean;
@@ -34,7 +31,13 @@ class Admin extends React.Component<any, IAdminState> {
             });
 
             ws.addEventListener('message', (message) => {
-                const parsedData = bson.deserialize(Buffer.from(message.data));
+                const parsedData = JSON.parse(message.data, (key, value) => {
+                    if (key === 'time') {
+                        return new Date(value);
+                    }
+
+                    return value;
+                });
 
                 if (parsedData.type === 'BUZZ') {
                     this.getBuzz(parsedData.playerResult);
@@ -51,7 +54,7 @@ class Admin extends React.Component<any, IAdminState> {
     }
 
     public start() {
-        this._socketConnection.send(bson.serialize({ type: 'start' }));
+        this._socketConnection.send(JSON.stringify({ type: 'start' }));
         this.setState({
             hasStarted: true,
             playerResultList: new Map(),
@@ -59,7 +62,7 @@ class Admin extends React.Component<any, IAdminState> {
     }
 
     public stop() {
-        this._socketConnection.send(bson.serialize({ type: 'stop' }));
+        this._socketConnection.send(JSON.stringify({ type: 'stop' }));
         this.setState({
             hasStarted: false,
         });

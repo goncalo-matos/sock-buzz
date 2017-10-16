@@ -5,12 +5,8 @@ import * as sinonChai from 'sinon-chai';
 
 use(sinonChai);
 
-import { BSON } from 'bson';
 import * as WebSocket from 'ws';
 import { PlayerSocketServer } from '../src/PlayerSocketServer';
-
-// HACK: this aint cool. should be mocking
-const bson = new BSON();
 
 describe('PlayerSocketServer', function () {
     let playerSocketServer: PlayerSocketServer;
@@ -118,7 +114,7 @@ describe('PlayerSocketServer', function () {
 
             clientStub.on
                 .withArgs('message', match.func)
-                .callArgWith(1, bson.serialize({type: 'BUZZ'}), { connection: { remoteAddress: '1' } });
+                .callArgWith(1, JSON.stringify({type: 'BUZZ'}), { connection: { remoteAddress: '1' } });
         });
 
         it('should stop receiving broadcasts', function () {
