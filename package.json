@@ -9,6 +9,7 @@
     "tslint-no-unused-expression-chai": "0.0.3",
     "typescript": "^2.5.3"
   },
+  "cacheDirectories": ["node_modules", "packages/server/node_modules", "packages/client/node_modules"],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build_deps": "lerna bootstrap",
