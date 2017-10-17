@@ -10,7 +10,9 @@
     "typescript": "^2.5.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build_deps": "lerna bootstrap",
+    "start": "lerna run --parallel start"
   },
   "repository": {
     "type": "git",
