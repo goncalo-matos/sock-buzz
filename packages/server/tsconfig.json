@@ -5,8 +5,7 @@
         "outDir": "build/",
         "baseUrl": "",
         "sourceMap": true,
-        "experimentalDecorators": true,
-        "watch": true
+        "experimentalDecorators": true
     },
     "include": [
         "src/**/*"

@@ -7,7 +7,8 @@
     "test": "mocha",
     "test-watch": "mocha --watch-extensions ts -w",
     "prepare": "tsc --watch false",
-    "start": "concurrently --kill-others \"tsc -w\" \"nodemon -w ./build build/index.js\"",
+    "start-dev": "concurrently --kill-others \"tsc -w\" \"nodemon -w ./build build/index.js\"",
+    "start": "tsc && node build/index.js",
     "prepublishOnly": "npm run test"
   },
   "author": "Gonçalo Matos <goncalomatos3@gmail.com>",
