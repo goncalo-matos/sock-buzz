@@ -8,7 +8,7 @@
     "test-watch": "mocha --watch-extensions ts -w",
     "prepare": "tsc --watch false",
     "start-dev": "concurrently --kill-others \"tsc -w\" \"nodemon -w ./build build/index.js\"",
-    "start": "tsc && node build/index.js",
+    "start": "tsc --watch false && node build/index.js",
     "prepublishOnly": "npm run test"
   },
   "author": "Gonçalo Matos <goncalomatos3@gmail.com>",
@@ -22,6 +22,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/chai": "^4.0.4",
+    "@types/express": "^4.0.37",
     "@types/sinon-chai": "^2.7.29",
     "@types/ws": "^3.2.0",
     "chai": "^4.1.2",
@@ -37,6 +38,7 @@
     "typescript": "^2.5.3"
   },
   "dependencies": {
+    "express": "^4.16.2",
     "ws": "^3.2.0"
   }
 }
