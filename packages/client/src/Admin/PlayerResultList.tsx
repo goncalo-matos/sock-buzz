@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+const tableStyle = require('./table.scss');
+
 interface IPlayer {
     name: string;
 }
@@ -29,14 +31,19 @@ class PlayerResultList extends React.Component<IPlayerResultListProps, any> {
                     time = `+${(playerResult.time.getTime() - firstTime.getTime()) / 1000}s`;
                 }
 
-                return <li key={key}>
-                    {playerResult.player.name}{time}
-                </li>;
+                return <tr key={key}>
+                    <td>{playerResult.player.name}</td><td>{time}</td>
+                </tr>;
             });
 
-        return <ul>
-            {listItems}
-        </ul>;
+        return <table className={tableStyle.table}>
+            <thead>
+                <th>Player</th><th>Time</th>
+            </thead>
+            <tbody>
+                {listItems}
+            </tbody>
+        </table>;
     }
 }
 

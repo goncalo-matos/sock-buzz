@@ -1,0 +1,21 @@
+.table {
+    width: 100%;
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+
+    > thead > th {
+        font-weight: normal;
+        color: grey;
+        padding: 2px 4px;
+        border-bottom: 1px solid rgba(0,0,0,.12);
+    }
+
+    > tbody + tbody {
+        border-top: 1px solid rgba(0,0,0,.12);
+    }
+
+    > tbody > tr > td {
+        & + td {
+            text-align: center;
+        }
+    }
+}

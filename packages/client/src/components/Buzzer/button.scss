@@ -7,6 +7,7 @@ $btn-disabled-color: lighten($color: $btn-color, $amount: 15%);
 }
 
 .btn {
+    font-family: 'Lato', Calibri, Arial, sans-serif;
     border: none;
     cursor: pointer;
     outline: none;
