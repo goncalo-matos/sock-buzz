@@ -13,7 +13,7 @@
   "scripts": {
     "postinstall": "npm run build_deps",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build_deps": "lerna bootstrap",
+    "build_deps": "cd packages/client && npm install && cd ../server && npm install && cd ../../ && lerna bootstrap",
     "start": "lerna run --parallel start",
     "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false; export NODE_ENV=; NPM_CONFIG_PRODUCTION=false NODE_ENV=development npm install --only=dev --dev",
     "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production;"
