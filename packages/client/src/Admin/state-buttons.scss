@@ -1,0 +1,51 @@
+$btn-height: 5px;
+
+.btn {
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    border-radius: 7px;
+    padding: 10px 15px 5px 15px;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    font-size: 12pt;
+    margin: 5px;
+    margin-bottom: 10px;
+
+    position: relative;
+
+    transition: all 100ms ease;
+
+    &:disabled {
+        opacity: 0.4;
+    }
+}
+
+.red {
+    @extend .btn;
+    background-color: red;
+    color: white;
+    box-shadow: 0 $btn-height darken(red, 5%);
+
+    &:active {
+        box-shadow: 0 0 darken(red, 5%);
+        top: $btn-height;
+    }
+}
+
+.green {
+    @extend .btn;
+    background-color: green;
+    box-shadow: 0 $btn-height darken(green, 5%);
+    color: white;
+
+    &:active {
+        box-shadow: 0 0 darken(green, 5%);
+        top: $btn-height;
+    }
+}
+

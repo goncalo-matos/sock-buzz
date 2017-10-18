@@ -3,6 +3,8 @@ import * as React from 'react';
 import { getWebSocket } from '../helpers/WebSocketPromise';
 import { IPlayerResult, IPlayerResultListProps, PlayerResultList } from './PlayerResultList';
 
+const stateButtonsStyle = require('./state-buttons.scss');
+
 const ADMIN_WEBSOCKET_PATH = `ws://${location.hostname}:9292`;
 
 interface IAdminState {
@@ -82,8 +84,14 @@ class Admin extends React.Component<any, IAdminState> {
 
         if (this.state.isSocketConnected) {
             gameStateButtons = <span>
-                <button onClick={(e) => { this.start(); }} disabled={this.state.hasStarted}>START</button>
-                <button onClick={(e) => { this.stop(); }} disabled={!this.state.hasStarted}>STOP</button>
+                <button className={ stateButtonsStyle.green }
+                    onClick={(e) => { this.start(); }}
+                    disabled={this.state.hasStarted}
+                >START</button>
+                <button className={ stateButtonsStyle.red }
+                    onClick={(e) => { this.stop(); }}
+                    disabled={!this.state.hasStarted}
+                >STOP</button>
             </span>;
             playerResultList = <PlayerResultList players={this.state.playerResultList} />;
         }
