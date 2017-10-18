@@ -25,7 +25,7 @@ class App extends React.Component<any, IAppState> {
     public login(username: string) {
         let isAdmin = false;
         // todo implement actual check
-        if (username === 'admin') {
+        if (username === '4dm1n') {
             isAdmin = true;
         }
 
