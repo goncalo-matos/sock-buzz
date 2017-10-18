@@ -22,12 +22,12 @@ class PlayerSocketServer {
         this._isActive = false;
     }
 
-    public startServer(port: number) {
+    public startServer(server, port: number) {
         if (this._socketServer) {
             return;
         }
 
-        this._socketServer = new WebSocket.Server({ port });
+        this._socketServer = new WebSocket.Server({ server, port });
         this._socketServer.on('connection', (ws, req) => this._onConnect(ws, req));
     }
 
