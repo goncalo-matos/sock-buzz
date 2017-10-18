@@ -24,9 +24,9 @@ class PlayerResultList extends React.Component<IPlayerResultListProps, any> {
 
                 if (index === 0 ) {
                     firstTime = playerResult.time;
-                    time = playerResult.time.toDateString();
+                    time = playerResult.time.toLocaleDateString('pt-PT', {hour: '2-digit', minute: '2-digit'});
                 } else {
-                    time = `+${playerResult.time.getTime() - time / 1000}s`;
+                    time = `+${(playerResult.time.getTime() - firstTime.getTime()) / 1000}s`;
                 }
 
                 return <li key={key}>
