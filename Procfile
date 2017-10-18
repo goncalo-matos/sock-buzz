@@ -1,1 +1,1 @@
-web: npm run build_deps && npm run start
+web: npm run start
