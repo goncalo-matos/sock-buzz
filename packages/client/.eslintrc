@@ -1,3 +1,9 @@
 {
+    "plugins": ["prettier"],
+    "rules": {
+        "prettier/prettier": "error",
+        "newline-after-var": "error",
+        "newline-before-return": "error"
+    },
     "extends": "react-app"
 }

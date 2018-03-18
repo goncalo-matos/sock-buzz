@@ -1,38 +1,57 @@
+//@flow
 import React, { Component } from 'react';
-import { Grid, Navbar, Jumbotron, Button } from 'react-bootstrap';
+import { Router, Route, Link } from 'react-router-dom';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <Navbar inverse fixedTop>
-          <Grid>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <a href="/">React App</a>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-            </Navbar.Header>
-          </Grid>
-        </Navbar>
-        <Jumbotron>
-          <Grid>
-            <h1>Welcome to React</h1>
-            <p>
-              <Button
-                bsStyle="success"
-                bsSize="large"
-                href="http://react-bootstrap.github.io/components.html"
-                target="_blank"
-              >
-                View React Bootstrap Docs
-              </Button>
-            </p>
-          </Grid>
-        </Jumbotron>
-      </div>
-    );
-  }
+import { isLoggedIn, login, logout } from './services/auth';
+import history from './services/history';
+
+import Home from './views/Home';
+import Login from './views/Login';
+import Callback from './views/Callback';
+
+class App extends Component<{}, {}> {
+    render() {
+        return (
+            <Router history={history}>
+                <div>
+                    <Navbar inverse staticTop>
+                        <Navbar.Header>
+                            <Navbar.Brand>
+                                <Link to="/">React App</Link>
+                            </Navbar.Brand>
+                            <Navbar.Toggle />
+                        </Navbar.Header>
+                        <Navbar.Collapse>
+                            <Nav pullRight>
+                                <NavItem>
+                                    {isLoggedIn() ? (
+                                        <button
+                                            className="btn btn-danger log"
+                                            onClick={() => logout()}
+                                        >
+                                            Log out{' '}
+                                        </button>
+                                    ) : (
+                                        <button
+                                            className="btn btn-info log"
+                                            onClick={() => login()}
+                                        >
+                                            Log In
+                                        </button>
+                                    )}
+                                </NavItem>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
+
+                    <Route exact path="/" component={Home} />
+                    <Route path="/login" component={Login} />
+                    <Route path="/callback" component={Callback} />
+                </div>
+            </Router>
+        );
+    }
 }
 
 export default App;
